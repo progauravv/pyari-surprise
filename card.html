@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>A Bespoke Surprise Just for You! 🎁</title>
+  <meta name="theme-color" content="#070709">
+  <meta name="msapplication-TileColor" content="#0A0A0C">
+  <meta name="msapplication-config" content="pyari-favicon/browserconfig.xml">
+  <link rel="icon" href="pyari-favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="pyari-favicon/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="pyari-favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="pyari-favicon/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="pyari-favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="pyari-favicon/apple-icon-180x180.png">
+  <link rel="manifest" href="pyari-favicon/manifest.json">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="card.css">
+</head>
+<body class="theme-ambient">
+
+  <div class="ambient-glow-layer">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <header class="hud-top-bar">
+    <div class="hud-brand-pill">
+      <img class="hud-logo" src="pyari.png" alt="Pyari">
+      <span class="hud-title">BESPOKE MOMENTS</span>
+    </div>
+    <button type="button" class="hud-btn" id="sound-toggle-btn" aria-label="Toggle Sound">
+      <span id="sound-icon">🔊</span>
+      <span id="sound-label" class="sound-text">SOUND ON</span>
+    </button>
+  </header>
+
+  <main class="viewport-wrapper">
+    
+    <!-- STAGE 1: UNBOXING -->
+    <section class="unboxing-stage" id="unboxing-stage">
+      <div class="ceremony-header">
+        <div class="cipher-tag">[ CONFIDENTIAL TRANSMISSION ]</div>
+        <h1 class="recipient-display-title">
+          Specially crafted for <br><span class="highlight-name" id="hero-recipient-name">Maya</span>
+        </h1>
+        <p class="ceremony-instruction">Tap the artifact below to reveal your surprise</p>
+      </div>
+
+      <div class="ceremony-interactive-holder">
+        <!-- Gift Box -->
+        <div class="artifact-box-wrapper" id="artifact-gift-box">
+          <div class="gift-box-3d" id="gift-box-trigger">
+            <div class="gift-lid">
+              <div class="lid-ribbon-v"></div>
+              <div class="lid-bow">🎀</div>
+            </div>
+            <div class="gift-body">
+              <div class="body-ribbon-v"></div>
+            </div>
+          </div>
+          <div class="artifact-tap-ring">
+            <span class="ring-pulse"></span>
+            <span class="ring-text">TAP TO UNWRAP</span>
+          </div>
+        </div>
+
+        <!-- Wax Seal -->
+        <div class="artifact-box-wrapper" id="artifact-wax-seal" style="display: none;">
+          <div class="envelope-3d" id="envelope-trigger">
+            <div class="wax-seal-stamp">
+              <div class="wax-inner-emblem">❤️</div>
+            </div>
+          </div>
+          <div class="artifact-tap-ring">
+            <span class="ring-pulse"></span>
+            <span class="ring-text">BREAK WAX SEAL</span>
+          </div>
+        </div>
+
+        <!-- Scratch -->
+        <div class="artifact-box-wrapper" id="artifact-scratch" style="display: none;">
+          <div class="scratch-card-frame">
+            <div class="scratch-underlayer">✨ SURPRISE! ✨</div>
+            <canvas id="scratch-canvas" class="scratch-canvas"></canvas>
+          </div>
+          <p class="scratch-progress-tag" id="scratch-progress-text">Scratch foil to reveal</p>
+        </div>
+
+        <!-- Balloons -->
+        <div class="artifact-box-wrapper" id="artifact-balloons" style="display: none;">
+          <div class="balloons-grid" id="balloons-grid"></div>
+          <p class="balloons-progress-tag" id="balloons-progress-text">Pop all 4 balloons to reveal!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 2: 3D REVEAL CARD -->
+    <section class="reveal-stage" id="celebration-stage" style="display: none;">
+      <div class="reveal-card-3d" id="tilt-card">
+        <div class="card-inner-surface">
+          
+          <div class="card-top-bar">
+            <div class="occasion-luxury-pill">
+              <span id="card-occ-emoji">🎂</span>
+              <span id="card-occ-text">BIRTHDAY EDITION</span>
+            </div>
+            <div class="edition-serial">№ PY-2026</div>
+          </div>
+
+          <h2 class="card-headline-title" id="card-headline">Happy Birthday, Maya!</h2>
+
+          <!-- Photo Memory if attached -->
+          <div class="card-memory-photo-box" id="card-photo-container" style="display: none;">
+            <img id="card-photo-img" src="" alt="Cherished Memory">
+          </div>
+
+          <!-- Wave Visualizer -->
+          <div class="audio-wave-visualizer">
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-label" id="track-name-label">PLAYING: BESPOKE SOUNDTRACK</span>
+          </div>
+
+          <!-- Message -->
+          <div class="card-message-parchment">
+            <div class="quote-mark open">“</div>
+            <p class="card-message-text" id="card-message-body"></p>
+            <div class="quote-mark close">”</div>
+          </div>
+
+          <!-- Signature -->
+          <div class="card-signature-footer">
+            <div>
+              <span class="sig-label">WITH SINCERE AFFECTION,</span>
+              <div class="sig-name" id="card-sender-name">ROHAN</div>
+            </div>
+            <div class="sig-monogram" id="sig-monogram-badge">R</div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="card-action-bar">
+            <button type="button" class="action-btn-celebrate" id="pop-more-confetti-btn">
+              ✨ POP MORE CONFETTI ✨
+            </button>
+            <a href="index.html" class="action-link-create">
+              Craft your own surprise for someone special &rarr;
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="occasions.js"></script>
+  <script src="audio.js"></script>
+  <script src="confetti.js"></script>
+  <script src="card.js"></script>
+</body>
+</html>

@@ -1,0 +1,730 @@
+﻿/* ==========================================================================
+   Pyari — 3D Cinematic Reveal Card & Luxury Unboxing Stylesheet
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap');
+
+:root {
+  --bg-deep: #070709;
+  --bg-card: rgba(18, 18, 22, 0.92);
+  --accent-vermilion: #FF3E00;
+  --accent-gold: #E5B25D;
+  --accent-gold-glow: rgba(229, 178, 93, 0.35);
+  --accent-crimson: #FF2A55;
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-gold: rgba(229, 178, 93, 0.3);
+  --text-pure: #FAF8F5;
+  --text-main: #E2DFD8;
+  --text-muted: #8E8C87;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   AMBIENT GLOW LAYER
+   ========================================================================== */
+.ambient-glow-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  animation: orbDrift 14s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+  width: 550px;
+  height: 550px;
+  top: -10%;
+  left: 10%;
+  background: radial-gradient(circle, #FF3E00 0%, transparent 70%);
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  bottom: -15%;
+  right: 5%;
+  background: radial-gradient(circle, #E5B25D 0%, transparent 70%);
+  animation-delay: -5s;
+}
+
+@keyframes orbDrift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(40px, -30px) scale(1.1); }
+  100% { transform: translate(-30px, 30px) scale(0.95); }
+}
+
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 60;
+}
+
+/* ==========================================================================
+   TOP HUD CONTROLS
+   ========================================================================== */
+.hud-top-bar {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.hud-brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.9rem;
+  background: rgba(18, 18, 22, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: 9999px;
+  pointer-events: auto;
+}
+
+.hud-logo { width: 48px; height: 48px; object-fit: cover; object-position: center; display: block; border: 2px solid transparent; border-radius: 50%; background: linear-gradient(#08080a, #08080a) padding-box, conic-gradient(from 0deg, #FF3E00, #E5B25D, #FF2A55, #8C5CFF, #FF3E00) border-box; box-shadow: 0 0 16px rgba(255, 62, 0, 0.25); animation: hudLogoRingSpin 6s linear infinite; }
+@keyframes hudLogoRingSpin { to { filter: hue-rotate(360deg); } }
+
+.pulse-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-vermilion);
+  box-shadow: 0 0 10px var(--accent-vermilion);
+  animation: heartPulse 1.5s infinite;
+}
+
+.hud-title {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-pure);
+}
+
+.hud-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  background: rgba(18, 18, 22, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: 9999px;
+  color: var(--text-pure);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.2s ease;
+}
+.hud-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-vermilion);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   VIEWPORT WRAPPER
+   ========================================================================== */
+.viewport-wrapper {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1.25rem 3rem;
+}
+
+/* ==========================================================================
+   STAGE 1: UNBOXING CEREMONY
+   ========================================================================== */
+.unboxing-stage {
+  width: 100%;
+  max-width: 580px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  animation: stageEnter 0.7s var(--ease-smooth) forwards;
+}
+
+@keyframes stageEnter {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.cipher-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--accent-gold);
+  margin-bottom: 0.5rem;
+}
+
+.recipient-display-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  color: var(--text-pure);
+  line-height: 1.15;
+}
+
+.highlight-name {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  background: linear-gradient(135deg, #FFFFFF 0%, var(--accent-gold) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ceremony-instruction {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* 3D Interactive Artifact Holder */
+.ceremony-interactive-holder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+}
+
+/* Artifact 1: 3D Hologram Gift Box */
+.gift-box-3d {
+  width: 140px;
+  height: 140px;
+  position: relative;
+  cursor: pointer;
+  perspective: 600px;
+  transition: transform 0.3s var(--ease-elastic);
+  animation: floatBox 4s ease-in-out infinite alternate;
+}
+.gift-box-3d:hover {
+  transform: scale(1.12) rotateX(10deg) rotateY(-8deg);
+}
+
+@keyframes floatBox {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-14px) rotate(2deg); }
+}
+
+.gift-lid {
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: 156px;
+  height: 38px;
+  background: linear-gradient(135deg, #FF4500, #D12E00);
+  border-radius: 12px 12px 6px 6px;
+  box-shadow: 0 8px 25px rgba(255, 62, 0, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s var(--ease-smooth);
+}
+
+.lid-ribbon-v {
+  width: 24px;
+  height: 100%;
+  background: var(--accent-gold);
+  box-shadow: 0 0 10px rgba(229,178,93,0.5);
+}
+
+.lid-bow {
+  position: absolute;
+  top: -24px;
+  font-size: 2.2rem;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+}
+
+.gift-body {
+  position: absolute;
+  bottom: 0;
+  width: 140px;
+  height: 110px;
+  background: linear-gradient(135deg, #E03700, #992200);
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255,255,255,0.2);
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.body-ribbon-v {
+  width: 24px;
+  height: 100%;
+  background: var(--accent-gold);
+  box-shadow: 0 0 12px rgba(229,178,93,0.5);
+}
+
+.artifact-tap-ring {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.4rem;
+  background: rgba(255, 62, 0, 0.12);
+  border: 1px solid rgba(255, 62, 0, 0.35);
+  border-radius: 9999px;
+  box-shadow: 0 0 25px rgba(255, 62, 0, 0.2);
+}
+
+.ring-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-vermilion);
+  box-shadow: 0 0 12px var(--accent-vermilion);
+  animation: pulseBeat 1.2s infinite;
+}
+
+.ring-text {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--text-pure);
+}
+
+/* Artifact 2: Luxury Wax Seal Envelope */
+.envelope-3d {
+  width: 260px;
+  height: 170px;
+  background: #1A1A22;
+  border: 1px solid var(--border-gold);
+  border-radius: 14px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(229,178,93,0.15);
+  cursor: pointer;
+  transition: transform 0.3s var(--ease-smooth);
+}
+.envelope-3d:hover { transform: scale(1.05) translateY(-5px); }
+
+.wax-seal-stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #D82E00, #8A1700);
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.4);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #fff;
+  transition: transform 0.2s var(--ease-elastic);
+}
+.wax-seal-stamp:hover { transform: translate(-50%, -50%) scale(1.15); }
+
+/* Artifact 3: Scratch Foil */
+.scratch-card-frame {
+  width: 280px;
+  height: 160px;
+  border-radius: 16px;
+  border: 2px solid var(--border-gold);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+}
+.scratch-underlayer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #141418, #22222A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--accent-gold);
+}
+.scratch-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+/* Artifact 4: Balloons */
+.balloons-grid {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.balloon-item {
+  width: 60px;
+  height: 75px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  transition: transform 0.2s, opacity 0.2s;
+}
+.balloon-item:hover { transform: scale(1.15); }
+.balloon-item.popped { opacity: 0; transform: scale(0); pointer-events: none; }
+
+/* ==========================================================================
+   STAGE 2: 3D LUXURY CINEMATIC REVEAL CARD
+   ========================================================================== */
+.reveal-stage {
+  width: 100%;
+  max-width: 440px;
+  perspective: 1200px;
+  animation: cardStageEnter 0.9s var(--ease-elastic) forwards;
+}
+
+@keyframes cardStageEnter {
+  0%   { opacity: 0; transform: scale(0.8) translateY(60px) rotateX(15deg); }
+  100% { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); }
+}
+
+.reveal-card-3d {
+  position: relative;
+  border-radius: 28px;
+  padding: 2px;
+  background: conic-gradient(from 0deg, #FF3E00, #E5B25D, #FF2A55, #8C5CFF, #FF3E00);
+  box-shadow:
+    0 30px 80px -15px rgba(0, 0, 0, 0.9),
+    0 0 50px -10px rgba(255, 62, 0, 0.25),
+    0 0 80px -20px rgba(229, 178, 93, 0.15);
+  transition: transform 0.15s ease-out;
+  transform-style: preserve-3d;
+}
+
+.reveal-card-3d::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 30px;
+  background: inherit;
+  filter: blur(14px);
+  opacity: 0.4;
+  z-index: -1;
+}
+
+.card-inner-surface {
+  background: #0E0E12;
+  border-radius: 26px;
+  padding: clamp(1rem, 3vw, 1.35rem);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background-image:
+    radial-gradient(circle at 100% 0%, rgba(229, 178, 93, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(255, 62, 0, 0.06) 0%, transparent 50%);
+}
+
+.card-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.occasion-luxury-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(229, 178, 93, 0.1);
+  border: 1px solid var(--border-gold);
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.edition-serial {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* Headline */
+.card-headline-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 600;
+  color: var(--text-pure);
+  line-height: 1.12;
+  text-align: left;
+  letter-spacing: -0.01em;
+}
+
+/* Memory Photo Frame in Final Recipient View */
+.card-memory-photo-box {
+  width: min(100%, 160px);
+  aspect-ratio: 1;
+  margin: 0.5rem auto;
+  background:
+    linear-gradient(#08080a, #08080a) padding-box,
+    conic-gradient(from 0deg, #FF3E00, #E5B25D, #FF2A55, #8C5CFF, #FF3E00) border-box;
+  border: 2px solid transparent;
+  border-radius: 18px;
+  padding: 8px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+  animation: photoBorderSpin 5s linear infinite;
+}
+
+@keyframes photoBorderSpin {
+  to { filter: hue-rotate(360deg); }
+}
+
+.card-memory-photo-box img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  object-fit: contain;
+  object-position: center;
+  background: #000000;
+  display: block;
+}
+
+/* Audio Wave Visualizer */
+.audio-wave-visualizer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.wave-bar {
+  width: 3px;
+  height: 14px;
+  background: var(--accent-vermilion);
+  border-radius: 2px;
+  animation: waveDance 1s ease-in-out infinite alternate;
+}
+
+.wave-bar:nth-child(1) { animation-delay: 0.1s; height: 8px; }
+.wave-bar:nth-child(2) { animation-delay: 0.3s; height: 16px; }
+.wave-bar:nth-child(3) { animation-delay: 0.2s; height: 12px; }
+.wave-bar:nth-child(4) { animation-delay: 0.5s; height: 18px; }
+.wave-bar:nth-child(5) { animation-delay: 0.4s; height: 10px; }
+
+@keyframes waveDance {
+  0%   { transform: scaleY(0.4); opacity: 0.5; }
+  100% { transform: scaleY(1.2); opacity: 1; }
+}
+
+.wave-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  margin-left: 0.4rem;
+}
+
+/* Message Parchment */
+.card-message-parchment {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-glass);
+  border-radius: 18px;
+  padding: 1rem 1.1rem;
+  text-align: left;
+}
+
+.quote-mark {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  color: var(--accent-gold);
+  opacity: 0.4;
+  line-height: 0.6;
+}
+.quote-mark.open { margin-bottom: 0.4rem; }
+.quote-mark.close { margin-top: 0.8rem; text-align: right; }
+
+.card-message-text {
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  line-height: 1.7;
+  color: var(--text-main);
+  white-space: pre-line;
+}
+
+/* Signature & Monogram Footer */
+.card-signature-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-glass);
+}
+
+.sig-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.sig-name {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--accent-vermilion);
+}
+
+.sig-monogram {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #D82E00, #7A1400);
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 4px 15px rgba(255,62,0,0.3);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Footer Actions */
+.card-action-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  padding-top: 0.5rem;
+}
+
+.action-btn-celebrate {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(135deg, #FF3E00, #E03700);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255, 62, 0, 0.4);
+  transition: all 0.2s var(--ease-smooth);
+}
+.action-btn-celebrate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(255, 62, 0, 0.6);
+}
+
+.action-link-create {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.action-link-create:hover {
+  color: var(--accent-gold);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .viewport-wrapper { min-height: auto; padding: 4rem 0.65rem 1.5rem; }
+  .hud-top-bar { top: 0.75rem; left: 0.75rem; right: 0.75rem; }
+  .hud-brand-pill { padding: 0.35rem 0.6rem; }
+  .hud-logo { width: 42px; height: 42px; }
+  .hud-title { font-size: 0.56rem; letter-spacing: 0.08em; }
+  .unboxing-stage { gap: 1.25rem; }
+  .ceremony-interactive-holder { min-height: 220px; }
+  .gift-box-3d { width: 112px; height: 112px; }
+  .gift-lid { left: -6px; width: 124px; height: 30px; }
+  .gift-body { width: 112px; height: 88px; }
+  .lid-ribbon-v, .body-ribbon-v { width: 19px; }
+  .lid-bow { top: -20px; font-size: 1.8rem; }
+  .envelope-3d { width: min(78vw, 220px); height: 140px; }
+  .scratch-card-frame { width: min(84vw, 240px); height: 138px; }
+  .scratch-underlayer { font-size: 1.15rem; }
+  .balloons-grid { gap: 0.65rem; }
+  .balloon-item { width: 48px; height: 60px; font-size: 1.2rem; }
+  .reveal-stage { width: 100%; max-width: 100%; }
+  .reveal-card-3d { border-radius: 20px; }
+  .card-inner-surface { padding: 1rem; gap: 0.85rem; border-radius: 18px; }
+  .card-top-bar { gap: 0.5rem; }
+  .occasion-luxury-pill { padding: 0.3rem 0.55rem; font-size: 0.6rem; }
+  .edition-serial { font-size: 0.58rem; }
+  .card-headline-title { font-size: clamp(1.45rem, 8vw, 1.8rem); }
+  .card-memory-photo-box { width: min(48vw, 150px); margin: 0.15rem auto; padding: 5px; border-radius: 14px; }
+  .card-memory-photo-box img { border-radius: 9px; }
+  .audio-wave-visualizer { max-width: 100%; padding: 0.35rem 0.55rem; }
+  .wave-label { font-size: 0.52rem; letter-spacing: 0.04em; }
+  .card-message-parchment { padding: 0.9rem; border-radius: 13px; }
+  .card-message-text { font-size: 0.88rem; line-height: 1.5; }
+  .sig-name { font-size: 1.2rem; }
+  .recipient-display-title { font-size: 2rem; }
+}

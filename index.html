@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create a personalized birthday, anniversary, or heartfelt surprise link with a message, photo, music, and an interactive reveal.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0A0A0C">
+  <meta name="msapplication-TileColor" content="#0A0A0C">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pyari — Create a Personalized Surprise">
+  <meta property="og:description" content="Create a beautiful surprise link with your message, photo, music, and an interactive reveal.">
+  <meta property="og:image" content="pyari.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pyari — Create a Personalized Surprise">
+  <meta name="twitter:description" content="Create a beautiful surprise link with your message, photo, music, and an interactive reveal.">
+  <meta name="twitter:image" content="pyari.png">
+  <meta name="msapplication-config" content="pyari-favicon/browserconfig.xml">
+  <link rel="icon" href="pyari-favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="pyari-favicon/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="pyari-favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="pyari-favicon/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="pyari-favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="pyari-favicon/apple-icon-180x180.png">
+  <link rel="manifest" href="pyari-favicon/manifest.json">
+  <title>Pyari — Handcrafted Personalized Surprise Studio</title>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Pyari",
+      "url": "./",
+      "description": "Create personalized surprise links with messages, photos, music, and interactive reveals.",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Web browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="app-viewport">
+    
+    <!-- Studio Header -->
+    <header class="studio-header">
+      <a href="index.html" class="brand-combo">
+        <div class="brand-logo-wrap">
+          <img class="brand-logo" src="pyari.png" alt="Pyari">
+        </div>
+        <div class="brand-titles">
+          <div class="brand-main-text">Pyari</div>
+          <div class="brand-sub-text">.</div>
+        </div>
+      </a>
+      <div class="header-status-badge">
+        <span class="status-live-dot"></span>
+        <span>STUDIO READY</span>
+      </div>
+    </header>
+
+    <!-- Hero Section with Nepali Tagline -->
+    <section class="hero-banner">
+      <div class="badge-tagline">
+        [ प्यारी — हाम्रो कल्पनाबाट जन्मिएको एउटा मायालु पात्र, जसले साँचो मानवीय क्षण र भावनाहरूलाई प्रतिनिधित्व गर्छिन्। ]
+      </div>
+      <h1 class="hero-main-title">"Create a personalized surprise link <em>for someone special."</em></h1>
+      <p class="hero-sub-title">Add a heartfelt message, photo, and music to make a memorable interactive surprise. शब्दले नपुगेको माया, यो लिंकले पुर्‍याउँछ।</p>
+    </section>
+
+    <!-- Studio Grid: Wizard + Live Simulator -->
+    <div class="studio-bento-grid">
+      
+      <!-- Wizard Column -->
+      <main class="bento-wizard-card" id="wizard-box">
+        <nav class="stepper-nav-bar">
+          <button type="button" class="stepper-tab-btn active" id="step-btn-1">01 OCCASION</button>
+          <button type="button" class="stepper-tab-btn" id="step-btn-2">02 MOOD</button>
+          <button type="button" class="stepper-tab-btn" id="step-btn-3">03 PERSONALIZE</button>
+          <button type="button" class="stepper-tab-btn" id="step-btn-4">04 SHARE</button>
+        </nav>
+
+        <!-- Chapter 1: Occasion -->
+        <section class="wizard-step-pane active" id="step-view-1">
+          <div class="pane-step-counter">[ CHAPTER 01 / 04 ]</div>
+          <h2 class="pane-heading">Choose the Occasion</h2>
+          <p class="pane-subtitle">के को लागि सरप्राइज बनाउन चाहनुहुन्छ? (Select an occasion)</p>
+          <div class="bento-tiles-grid" id="occasions-grid"></div>
+          <div class="wizard-nav-footer" style="justify-content: flex-end;">
+            <button type="button" class="btn-studio btn-primary" id="next-to-step-2">PROCEED TO MOOD →</button>
+          </div>
+        </section>
+
+        <!-- Chapter 2: Mood -->
+        <section class="wizard-step-pane" id="step-view-2">
+          <div class="pane-step-counter">[ CHAPTER 02 / 04 ]</div>
+          <h2 class="pane-heading">Select the Reveal Mood</h2>
+          <p class="pane-subtitle">सरप्राइज खुल्दा कस्तो माहोल बनाउने? (Choose the atmosphere)</p>
+          <div class="bento-tiles-grid" id="styles-grid"></div>
+          <div class="wizard-nav-footer">
+            <button type="button" class="btn-studio btn-ghost" id="back-to-step-1">← BACK</button>
+            <button type="button" class="btn-studio btn-primary" id="next-to-step-3">PERSONALIZE SURPRISE →</button>
+          </div>
+        </section>
+
+        <!-- Chapter 3: Personalize -->
+        <section class="wizard-step-pane" id="step-view-3">
+          <div class="pane-step-counter">[ CHAPTER 03 / 04 ]</div>
+          <h2 class="pane-heading">Personalize the Surprise</h2>
+          <p class="pane-subtitle">नाम, फोटो, मनको कुरा र अडियो सेट गर्नुहोस्:</p>
+          
+          <form id="details-form" class="form-stack">
+            
+            <!-- Names Row -->
+            <div class="form-row-split">
+              <div>
+                <label class="field-label" for="recipient-name">RECIPIENT NAME (कसको लागि) *</label>
+                <input type="text" id="recipient-name" class="studio-input" placeholder="e.g. Maya, Anjali, Bestie..." minlength="1" maxlength="100" required>
+              </div>
+              <div>
+                <label class="field-label" for="sender-name">YOUR NAME / SIGNATURE (तपाईंको नाम) *</label>
+                <input type="text" id="sender-name" class="studio-input" placeholder="e.g. Rohan, Secret Admirer..." minlength="1" maxlength="100" required>
+              </div>
+            </div>
+
+            <!-- Photo Upload Feature -->
+            <div>
+              <label class="field-label">ATTACH A PHOTO / MEMORY (फोटो राख्नुहोस् - Optional)</label>
+              <div class="image-upload-wrapper" id="image-drop-area">
+                <input type="file" id="photo-file-input" accept="image/*" style="display: none;">
+                <div class="upload-placeholder" id="upload-placeholder-content">
+                  <span class="upload-icon">📸</span>
+                  <div class="upload-text">
+                    <strong>Click to upload a cherished photo</strong> or drag & drop here
+                  </div>
+                  <span class="upload-subtext">JPG, PNG, WebP supported</span>
+                </div>
+                <div class="upload-preview-box" id="upload-preview-container" style="display: none;">
+                  <img id="photo-preview-img" src="" alt="Uploaded Memory">
+                  <button type="button" class="btn-remove-photo" id="remove-photo-btn">✕ Remove Photo</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Heartfelt Message Box -->
+            <div>
+              <label class="field-label" for="custom-message">HEARTFELT MESSAGE (तपाईंको सन्देश)</label>
+              <textarea id="custom-message" class="studio-textarea" maxlength="2000" placeholder="Type your personal message, memories, or wishes here..."></textarea>
+            </div>
+
+            <!-- Soundtrack Selection (Preset Options) -->
+            <div>
+              <div class="field-header-row">
+                <label class="field-label" style="margin-bottom: 0;">REVEAL SOUNDTRACK / AUDIO (गीत वा धुन)</label>
+                <button type="button" id="preview-audio-btn" class="btn-audio-audition">
+                  ▶ Test Audio
+                </button>
+              </div>
+              
+              <!-- 6 Customizable Soundtrack Presets Grid -->
+              <div class="soundtrack-grid" id="soundtrack-grid"></div>
+            </div>
+
+            <!-- Unboxing Ceremony -->
+            <div>
+              <label class="field-label">UNBOXING CEREMONY (सरप्राइज खोल्ने तरिका)</label>
+              <div class="ceremony-options-grid" id="ceremony-options-grid">
+                <button type="button" class="ceremony-btn selected" data-ceremony="gift_box">🎁 Gift Box</button>
+                <button type="button" class="ceremony-btn" data-ceremony="wax_seal">💌 Wax Seal</button>
+                <button type="button" class="ceremony-btn" data-ceremony="scratch_card">🎟️ Scratch</button>
+                <button type="button" class="ceremony-btn" data-ceremony="balloons_pop">🎈 Balloons</button>
+              </div>
+            </div>
+
+            <div class="wizard-nav-footer">
+              <button type="button" class="btn-studio btn-ghost" id="back-to-step-2">← BACK</button>
+              <button type="submit" class="btn-studio btn-primary" id="generate-btn">GENERATE SURPRISE LINK →</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Chapter 4: Share -->
+        <section class="wizard-step-pane" id="step-view-4">
+          <div class="pane-step-counter">[ CHAPTER 04 / 04 ]</div>
+          <h2 class="pane-heading">Your Surprise is Ready! 🎉</h2>
+          <p class="pane-subtitle">Share this private interactive link with your recipient:</p>
+
+          <div class="share-link-row">
+            <input type="text" id="shareable-link-input" class="studio-input" readonly>
+            <button type="button" class="btn-studio btn-primary" id="copy-link-btn">COPY LINK</button>
+          </div>
+
+          <div class="share-actions-grid">
+            <button type="button" class="btn-studio btn-ghost btn-whatsapp" id="share-whatsapp-btn">💬 WhatsApp</button>
+            <button type="button" class="btn-studio btn-ghost" id="open-qr-btn">📱 View QR Code</button>
+            <a href="#" target="_blank" class="btn-studio btn-ghost" id="preview-surprise-link-btn">👀 Test Live</a>
+          </div>
+
+          <div style="display: flex; justify-content: center; margin-top: 1.5rem;">
+            <button type="button" class="btn-studio btn-ghost" id="create-another-btn">CREATE ANOTHER SURPRISE</button>
+          </div>
+        </section>
+      </main>
+
+      <!-- Live Simulator Preview -->
+      <aside class="simulator-col-wrapper">
+        <div class="phone-mockup-frame">
+          <div class="phone-dynamic-island">
+            <span class="island-camera"></span>
+            <span class="island-sensor"></span>
+          </div>
+
+          <div class="sim-screen-container">
+            <div class="sim-header-pill">
+              <span class="sim-dot"></span>
+              <span>LIVE SIMULATOR PREVIEW</span>
+            </div>
+
+            <div class="sim-card-body" id="sim-card-body">
+              <div class="sim-occ-tag" id="preview-occ-tag">🎂 BIRTHDAY</div>
+              
+              <!-- Memory Photo Preview in Simulator -->
+              <div class="sim-photo-wrap" id="sim-photo-box" style="display: none;">
+                <img id="sim-photo-img" src="" alt="Memory Photo">
+                <span class="sim-photo-caption">ARCHIVED MEMORY ✨</span>
+              </div>
+
+              <h3 class="sim-title" id="preview-title">Happy Birthday, Maya!</h3>
+              <div class="sim-quote" id="preview-quote">"May your year ahead be filled with endless joy and dreams fulfilled!"</div>
+              
+              <div class="sim-signature">
+                FROM: <strong id="preview-sender">Rohan</strong>
+              </div>
+            </div>
+
+            <div class="sim-bottom-hint">
+              <span>Interactive Recipient View</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- QR Code Modal -->
+  <div class="qr-modal-overlay" id="qr-modal">
+    <div class="qr-modal-card">
+      <button type="button" class="qr-close-btn" id="close-qr-btn">&times;</button>
+      <h3 class="qr-modal-title">Scan on Mobile 📱</h3>
+      <p class="qr-modal-sub">Scan this QR code with any camera app to open the surprise:</p>
+      <div class="qr-canvas-box" id="qr-code-container"></div>
+      <button type="button" class="btn-studio btn-ghost" id="modal-done-btn" style="width: 100%;">Close</button>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="occasions.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
